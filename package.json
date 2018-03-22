@@ -1,0 +1,160 @@
+{
+  "name": "second-nodechain-api",
+  "version": "0.1.0",
+  "description": "",
+  "repository": "https://github.com/secondai/second-nodechain-api",
+  "author": "Nicholas Reed",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "engines": {
+    "node": "~8.9.0",
+    "npm": ">=3.10.0"
+  },
+  "scripts": {
+    "prestartOLD": "npm run -s server:build",
+    "server:start": "node dist/index.js",
+    "server:startwithenv": "node -r dotenv/config dist/index.js",
+    "server:dev": "nodemon src/index.js --exec \"node -r dotenv/config -r babel-register\"",
+    "server:clean": "rimraf dist",
+    "server:build": "npm run server:clean && mkdir -p dist && babel src -s -D -d dist",
+    "server:test": "jest --watch",
+    "server:lint": "esw -w src test",
+    "heroku-local": "./node_modules/.bin/pm2 start npm -- run heroku-envstart && ./node_modules/.bin/pm2 logs",
+    "heroku-envstart": "node -r dotenv/config dist/index.js",
+    "heroku-postbuild": "npm run server:build",
+    "heroku": "IPFS_PATH=$PWD/repo/ipfs1 ./node_modules/.bin/jsipfs init && echo $IPFS_CONFIG_64 | base64 --decode > $PWD/repo/ipfs1/config && ./node_modules/.bin/pm2 start npm -- run server:start && ./node_modules/.bin/pm2 logs"
+  },
+  "keywords": [
+    "express",
+    "babel",
+    "boilerplate",
+    "scaffold",
+    "es6",
+    "es2015",
+    "es2016",
+    "es2017",
+    "jest",
+    "eslint"
+  ],
+  "dependencies": {
+    "@stdlib/stdlib": "^0.0.30",
+    "alasql": "^0.4.3",
+    "apollo-server-express": "^1.2.0",
+    "async-lock": "1.1.2",
+    "babel-cli": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "6.26.0",
+    "babel-preset-env": "^1.4.0",
+    "bigi": "^1.4.2",
+    "bitcoinjs-lib": "^3.3.0",
+    "body-parser": "^1.17.1",
+    "bs58": "4.0.1",
+    "compression": "^1.7.1",
+    "connect-mongo": "^2.0.0",
+    "connect-redis": "^3.3.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.4",
+    "cryptico": "1.0.2",
+    "crypto-js": "3.1.9-1",
+    "express": "^4.15.2",
+    "express-session": "^1.15.6",
+    "forever": "0.15.3",
+    "getstream": "^3.9.0",
+    "graphql": "^0.11.7",
+    "graphql-client": "^2.0.0",
+    "graphql-compose": "^2.9.6",
+    "graphql-compose-dataloader": "^1.1.2",
+    "graphql-compose-mongoose": "^1.9.4",
+    "graphql-subscriptions": "^0.5.4",
+    "graphql-tag": "^2.5.0",
+    "handlebars": "^4.0.11",
+    "helmet": "^3.9.0",
+    "ipfs": "https://github.com/ipfs/js-ipfs#pin-api",
+    "ipfs-repo": "0.18.7",
+    "js-schema": "^1.0.1",
+    "json-stable-stringify": "1.0.1",
+    "libp2p-webrtc-star": "0.13.4",
+    "luxon": "^0.0.19",
+    "mongoose": "^4.13.0",
+    "mongoose-auto-increment": "5.0.1",
+    "mongoose-plugin-autoinc": "1.1.9",
+    "morgan": "^1.9.0",
+    "multihashes": "0.4.13",
+    "nedb": "^1.8.0",
+    "nedb-promise": "^2.0.1",
+    "node-git-server": "^0.4.2",
+    "node-ipc": "^9.1.1",
+    "node-rsa": "0.4.2",
+    "nodegit": "^0.20.3",
+    "orbit-db": "0.19.5",
+    "passport": "^0.4.0",
+    "passport-auth0": "^0.6.1",
+    "passport-local": "^1.0.0",
+    "pm2": "2.10.1",
+    "pug": "^2.0.0-beta11",
+    "redis": "^2.8.0",
+    "request": "^2.83.0",
+    "request-promise-native": "1.0.5",
+    "rimraf": "^2.6.1",
+    "safe-eval": "^0.3.0",
+    "stellar-sdk": "0.8.0",
+    "subscriptions-transport-ws": "^0.9.1",
+    "uuid": "^3.1.0",
+    "vm2": "^3.5.2",
+    "winston": "^2.4.0",
+    "wrtc": "0.0.67"
+  },
+  "devDependencies": {
+    "babel-eslint": "^7.2.3",
+    "babel-jest": "^21.0.2",
+    "babel-register": "^6.24.1",
+    "dotenv": "^4.0.0",
+    "eslint": "^4.6.1",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jest": "^21.0.2",
+    "eslint-watch": "^3.1.0",
+    "jest": "^21.0.2",
+    "nodemon": "^1.11.0",
+    "supertest": "^3.0.0"
+  },
+  "babel": {
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": "current"
+          }
+        }
+      ]
+    ],
+    "plugins": [
+      "transform-object-rest-spread"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "plugins": [
+      "import",
+      "jest"
+    ],
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    },
+    "env": {
+      "node": true,
+      "jest": true
+    },
+    "extends": [
+      "eslint:recommended"
+    ],
+    "rules": {
+      "jest/no-focused-tests": 2,
+      "jest/no-identical-title": 2
+    }
+  },
+  "jest": {
+    "testEnvironment": "node"
+  }
+}
