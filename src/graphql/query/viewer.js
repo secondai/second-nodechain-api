@@ -4,13 +4,13 @@
 import gql from 'graphql-tag'
 import { buildTC as Key_buildTC } from './key';
 import { buildTC as Node_buildTC } from './node';
-import { buildTC as Crate_buildTC } from './crate';
-import { buildTC as Language_buildTC } from './language';
-import { buildTC as IpfsFile_buildTC } from './ipfs_file';
-import { buildTC as Wallet_buildTC } from './wallet';
-import { buildTC as Organization_buildTC } from './organization';
-import { buildTC as OrganizationUser_buildTC } from './organization_user';
-import { buildTC as User_buildTC } from './user';
+// import { buildTC as Crate_buildTC } from './crate';
+// import { buildTC as Language_buildTC } from './language';
+// import { buildTC as IpfsFile_buildTC } from './ipfs_file';
+// import { buildTC as Wallet_buildTC } from './wallet';
+// import { buildTC as Organization_buildTC } from './organization';
+// import { buildTC as OrganizationUser_buildTC } from './organization_user';
+// import { buildTC as User_buildTC } from './user';
 
 export const ViewerLoader = (GQC, db) => {
 
@@ -18,9 +18,11 @@ export const ViewerLoader = (GQC, db) => {
     Key: Key_buildTC,
     Node: Node_buildTC,
     // Crate: Crate_buildTC,
-    Language: Language_buildTC,
-    IpfsFile: IpfsFile_buildTC,
-    Wallet: Wallet_buildTC,
+
+    // Language: Language_buildTC,
+    // IpfsFile: IpfsFile_buildTC,
+    // Wallet: Wallet_buildTC,
+    
     // Organization: Organization_buildTC,
     // OrganizationUser: OrganizationUser_buildTC,
     // User: User_buildTC,
@@ -29,7 +31,7 @@ export const ViewerLoader = (GQC, db) => {
   let models = {},
     tcs = {};
 
-  const ViewerTC = GQC.get('Viewer');
+  const ViewerTC = GQC.getOrCreateTC('Viewer');
 
   Object.keys(modelToBuildAndLoad).forEach(model=>{
     const exported = modelToBuildAndLoad[model](GQC, db);
@@ -66,9 +68,6 @@ export const ViewerLoader = (GQC, db) => {
   //     return user;
   //   },
   // });
-
-
-
   // ViewerTC.addFields({
   //   // user: UserTC.get('$load'),
   //   me: ViewerTC.get('$me')

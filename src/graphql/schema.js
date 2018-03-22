@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { ComposeStorage } from 'graphql-compose';
+import { SchemaComposer } from 'graphql-compose';
 
 import { setupRoot } from './rootQuery'
 import { setupMutations } from './rootMutations'
@@ -10,12 +10,12 @@ import { setupMutations } from './rootMutations'
 
 const getSchema = (db) => {
 
-  // console.log('ComposeStorage');
-  const GQC = new ComposeStorage();
+  // console.log('schemaComposer');
+  const GQC = new SchemaComposer();
 
   // console.log('setupRoot');
   const { models, tcs } = setupRoot(GQC, db);
-  setupMutations(GQC, db, models, tcs);
+  // setupMutations(GQC, db, models, tcs);
 
   // console.log('buildSchema');
   const schema = GQC.buildSchema();

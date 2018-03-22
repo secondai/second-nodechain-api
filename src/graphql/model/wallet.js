@@ -3,6 +3,8 @@ import composeWithDataLoader from 'graphql-compose-dataloader';
 import { composeWithMongoose, mongooseTypeStorage } from 'graphql-compose-mongoose';
 // import { GQC } from 'graphql-compose';
 
+import { schemaComposer } from 'graphql-compose';
+
 const buildAll = (db) => {
 
   const WalletSchema = new mongoose.Schema({
@@ -30,7 +32,7 @@ const buildAll = (db) => {
   });
 
   const WalletModel = db.model('Wallets', WalletSchema);
-  mongooseTypeStorage.clear();
+  schemaComposer.clear();
   const WalletTC = composeWithDataLoader(composeWithMongoose(WalletModel));
 
   return {

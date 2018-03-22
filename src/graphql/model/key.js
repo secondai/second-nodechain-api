@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import composeWithDataLoader from 'graphql-compose-dataloader';
 import { composeWithMongoose, mongooseTypeStorage } from 'graphql-compose-mongoose';
 // import { GQC } from 'graphql-compose';
+import { schemaComposer } from 'graphql-compose';
 
 const buildAll = (db) => {
 
@@ -28,8 +29,8 @@ const buildAll = (db) => {
   });
 
   const KeyModel = db.model('Keys', KeySchema);
-  mongooseTypeStorage.clear();
-  const KeyTC = composeWithDataLoader(composeWithMongoose(KeyModel));
+  schemaComposer.clear();
+  const KeyTC = composeWithMongoose(KeyModel);
 
   return {
     KeySchema,

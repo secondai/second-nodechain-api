@@ -611,13 +611,13 @@ function ipfsSetup(){
   });
 }
 
-let ipfsReady = ipfsSetup();
+// let ipfsReady = ipfsSetup();
 
-// IPFS middleware 
-app.use(async (req,res,next)=>{
-  await ipfsReady;
-  next();
-});
+// // IPFS middleware 
+// app.use(async (req,res,next)=>{
+//   await ipfsReady;
+//   next();
+// });
 
 // Routes
 app.use('/', require('./routes').default);

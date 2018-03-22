@@ -3,6 +3,8 @@ import composeWithDataLoader from 'graphql-compose-dataloader';
 import { composeWithMongoose, mongooseTypeStorage } from 'graphql-compose-mongoose';
 // import { GQC } from 'graphql-compose';
 
+import { schemaComposer } from 'graphql-compose';
+
 const buildAll = (db) => {
 
   const NodeSchema = new mongoose.Schema({
@@ -59,8 +61,8 @@ const buildAll = (db) => {
   });
 
   const NodeModel = db.model('Nodes', NodeSchema);
-  mongooseTypeStorage.clear();
-  const NodeTC = composeWithDataLoader(composeWithMongoose(NodeModel));
+  schemaComposer.clear();
+  const NodeTC = composeWithMongoose(NodeModel);
 
   return {
     NodeSchema,

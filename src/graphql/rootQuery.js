@@ -3,6 +3,8 @@
 import { ViewerLoader } from './query/viewer';
 // import { AdminTC } from './admin';
 
+import { composeWithMongoose } from 'graphql-compose-mongoose'
+
 function setupRoot(GQC, db){
 
 	// modifies GQC in place 
