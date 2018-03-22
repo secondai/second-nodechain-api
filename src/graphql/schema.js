@@ -15,7 +15,7 @@ const getSchema = (db) => {
 
   // console.log('setupRoot');
   const { models, tcs } = setupRoot(GQC, db);
-  // setupMutations(GQC, db, models, tcs);
+  setupMutations(GQC, db, models, tcs);
 
   // console.log('buildSchema');
   const schema = GQC.buildSchema();
