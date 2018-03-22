@@ -13,7 +13,10 @@ console.log('connecting to db:', process.env.MONGODB_URI, process.env.MONGODB_CO
 // const connAdmin = mongoose.createConnection(process.env.MONGODB_CONNECTION_ADMIN);
 let connAdmin;
 if(process.env.MONGODB_URI){
-  connAdmin = mongoose.connect(process.env.MONGODB_URI);
+  connAdmin = mongoose.connect(process.env.MONGODB_URI,{
+    useMongoClient: true,
+    autoReconnect: true
+  });
 } else {
   connAdmin = mongoose.createConnection(process.env.MONGODB_URI ? process.env.MONGODB_CONNECTION : process.env.MONGODB_CONNECTION);
 }
@@ -88,6 +91,7 @@ function getAdminSchema(){ // subdomain.corp
 
     // setup schema and resolve
     global.ADMIN_SCHEMA = getSchema(adminDb);
+    console.log('GotSchema');
     resolve(global.ADMIN_SCHEMA);
 
     // if(!tenant || !tenant._id){

@@ -77,7 +77,7 @@
     "json-stable-stringify": "1.0.1",
     "libp2p-webrtc-star": "0.13.4",
     "luxon": "^0.0.19",
-    "mongoose": "5.0.11",
+    "mongoose": "4.x",
     "mongoose-auto-increment": "5.0.1",
     "mongoose-plugin-autoinc": "1.1.9",
     "morgan": "^1.9.0",
