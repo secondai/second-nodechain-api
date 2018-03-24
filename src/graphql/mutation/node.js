@@ -45,7 +45,8 @@ const buildMutationTC = (GQC, db, models, tcs) => {
       let {
         // ipfsHash,
         nodeInputStr, // aka "package" will be parsed, hash computed (should match signature, etc.) 
-        pubKey,
+        pubKey, // author pubKey 
+        chainPubKey,
         ref,
         version,
         nonce,
@@ -55,6 +56,7 @@ const buildMutationTC = (GQC, db, models, tcs) => {
       ref = ref.toString();
       version = version.toString();
       nonce = nonce.toString();
+      chainPubKey = chainPubKey.toString();
 
 
       // console.log('ARGS:', args);
@@ -63,6 +65,21 @@ const buildMutationTC = (GQC, db, models, tcs) => {
 
       let lockResult = await lock.acquire('default', async ()=>{
         // async work
+
+        // validate chainPubKey 
+        let Chain = await models.Chain.findOne({pubKey: chainPubKey}).exec();
+        if(!Chain){
+          console.log('Chain does not exist!');
+          return {
+            error: true,
+            message: 'Chain does not exist'
+          }
+        }
+
+
+        // TODO: permissions in "key" table 
+
+
 
         console.log('Verify content');
 
@@ -121,7 +138,7 @@ const buildMutationTC = (GQC, db, models, tcs) => {
           // SHA256(pubKey).toString(),
           // (new Buffer(pubKey)).toString('base64'),
           pubKey,
-          app.publicKeyLocal, // verifying intention was "this" chain 
+          chainPubKey, //context.chainPubKey, // verifying intention was "this" chain 
           ref,
           version,
           nonce
@@ -318,6 +335,7 @@ const buildMutationTC = (GQC, db, models, tcs) => {
         // Create new node and save
         let newData = {
           // _id: uuidv4(),
+
           package: ipfsRawResult,
           ipfsHash,
           author: pubKey,
@@ -326,7 +344,8 @@ const buildMutationTC = (GQC, db, models, tcs) => {
           nonce,
           signature,
 
-          chain: app.publicKeyLocal, // always the same? 
+          chainPubKey, 
+          // chain: app.publicKeyLocal, // always the same? 
 
           // extracted
           type: iNode.type,
@@ -342,7 +361,7 @@ const buildMutationTC = (GQC, db, models, tcs) => {
         // console.log('iNode:', iNode);
         // console.log('iNode DATA:', iNode.data);
 
-
+        // TODO: sequence should be per-chain, not per the whole damn db 
         let nextId = await models.Node.nextCount(); // just for checking if previousNode shouldnt exist (id==1)
 
         // Get previous entry 
@@ -383,13 +402,13 @@ const buildMutationTC = (GQC, db, models, tcs) => {
             id: newNode._id,
             node: ipfsHash,
             prev: previousNode ? previousNode.ipfsHashForThisNode : null, // previous entry in chain 
-            chain: app.publicKeyLocal, // to identity "this" chain 
+            chain: chainPubKey, // to identity "this" chain 
             ref,
             version,
             nonce,
             signature, // submitted signature
           },
-          publicKey: app.publicKeyLocal, // our internal one, used for signing
+          publicKey: chainPubKey, // our internal one, used for signing
           signature: null
         };
 

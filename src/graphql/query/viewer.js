@@ -2,6 +2,7 @@
 // import { GQC } from 'graphql-compose';
 
 import gql from 'graphql-tag'
+import { buildTC as Chain_buildTC } from './chain';
 import { buildTC as Key_buildTC } from './key';
 import { buildTC as Node_buildTC } from './node';
 // import { buildTC as Crate_buildTC } from './crate';
@@ -15,6 +16,7 @@ import { buildTC as Node_buildTC } from './node';
 export const ViewerLoader = (GQC, db) => {
 
   let modelToBuildAndLoad = {
+    Chain: Chain_buildTC,
     Key: Key_buildTC,
     Node: Node_buildTC,
     // Crate: Crate_buildTC,

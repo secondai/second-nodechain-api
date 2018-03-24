@@ -3,6 +3,7 @@
 // import { ViewerLoader } from './query/viewer';
 // import { AdminTC } from './admin';
 
+import { buildMutationTC as Chain_buildMutationTC } from './mutation/chain';
 import { buildMutationTC as Key_buildMutationTC } from './mutation/key';
 import { buildMutationTC as Node_buildMutationTC } from './mutation/node';
 // import { buildMutationTC as Crate_buildMutationTC } from './mutation/crate';
@@ -19,6 +20,7 @@ function setupMutations(GQC, db, models, tcs){
 
   // modifies GQC in place 
 
+  const { ChainMutationTC } = Chain_buildMutationTC(GQC, db, models, tcs);
   const { KeyMutationTC } = Key_buildMutationTC(GQC, db, models, tcs);
   const { NodeMutationTC } = Node_buildMutationTC(GQC, db, models, tcs);
   // const { CrateMutationTC } = Crate_buildMutationTC(GQC, db, models, tcs);
@@ -34,6 +36,7 @@ function setupMutations(GQC, db, models, tcs){
   // const ViewerTC = ViewerLoader(GQC, db).ViewerTC;
 
   GQC.rootMutation().addFields({
+    chain: ChainMutationTC.get('$load'),
     key: KeyMutationTC.get('$load'),
     node: NodeMutationTC.get('$load'),
     // crate: CrateMutationTC.get('$load'),

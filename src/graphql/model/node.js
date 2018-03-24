@@ -15,6 +15,8 @@ const buildAll = (db) => {
     //   // index: true
     // },
 
+    chainPubKey: String, // pubKey of chain, permissions can be changed by the owner. eventually multi-sig? 
+
     ready: Boolean, // only used after saved 2nd time (counter/id is used in signature) 
 
     // counter: {
