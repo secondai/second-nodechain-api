@@ -44,7 +44,6 @@ const buildMutationTC = (GQC, db, models, tcs) => {
 
       try {
 
-
         let {
           // ipfsHash,
           nodeInputStr, // aka "package" will be parsed, hash computed (should match signature, etc.) 
@@ -59,7 +58,7 @@ const buildMutationTC = (GQC, db, models, tcs) => {
         ref = ref.toString();
         version = version.toString();
         nonce = nonce.toString();
-        chainPubKey = chainPubKey ? chainPubKey.toString() : app.publicKeyLocal; // temporary! 
+        chainPubKey = chainPubKey ? chainPubKey.toString() : app.publicKeyLocal;
 
 
         // console.log('ARGS:', args);
@@ -518,15 +517,15 @@ const buildMutationTC = (GQC, db, models, tcs) => {
 
           return returnObj;
 
-        } catch(err){
-          console.error('Failed adding Node:', err);
-          return false;
-        }
+        })
+    
+        console.log('Lock released');
+        return lockResult;
 
-      })
-  
-      console.log('Lock released');
-      return lockResult;
+      } catch(err){
+        console.error('Failed adding Node:', err);
+        return false;
+      }
 
       // , (err, ret)=>{
       //   if(err){
