@@ -536,9 +536,9 @@ const buildMutationTC = (GQC, db, models, tcs) => {
   NodeMutationTC.addFields({
     add: NodeMutationTC.getResolver('add'),
     // create: NodeMutationTC.getResolver('createOne'),
-    // updateById: NodeMutationTC.getResolver('updateById'),
-    // updateOne: NodeMutationTC.getResolver('updateOne'),
-    // updateMany: NodeMutationTC.getResolver('updateMany'),
+    updateById: NodeMutationTC.getResolver('updateById'),
+    updateOne: NodeMutationTC.getResolver('updateOne'),
+    updateMany: NodeMutationTC.getResolver('updateMany'),
     // removeById: NodeMutationTC.getResolver('removeById'),
     // removeOne: NodeMutationTC.getResolver('removeOne'),
     // removeMany: NodeMutationTC.getResolver('removeMany'),
